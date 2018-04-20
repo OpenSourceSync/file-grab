@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Hello World!</title>
+  <style>
+    body {
+      background-color: #333;
+    }
+
+    a {
+      display: inline-block;
+      padding: 15px 15px;
+      text-decoration: none;
+      background-color: #666;
+      color: white;
+    }
+  </style>
+</head>
+
+<body>
+  <a href="#" onclick="startFn()">START</a>
+  <a href="#" onclick="stopFn()">END</a>
+  <script>
+    const {screen} = require('electron').remote;
+    const {BrowserWindow} = require('electron').remote;
+    var remote = require('electron').remote;
+    const url = require('url');
+    const path = require('path');
+
+    let win;
+
+    function startFn() {
+      var allScreens = screen.getAllDisplays();
+      var x = allScreens[0].bounds.width - 250;
+      var y = 50;
+      
+      win = new BrowserWindow({
+        width: 200,
+        height: 200,
+        frame: false,
+        skipTaskbar: true,
+        alwaysOnTop: true,
+        backgroundColor: '#2F688D',
+        x: x,
+        y: y
+      })
+
+      win.loadURL(url.format({
+        pathname: path.join(__dirname, 'grab.html'),
+        protocol: 'file:',
+        slashes: true
+      }))
+    }
+
+    function stopFn() {
+      win.close();
+    }
+  </script>
+</body>
+</html>
